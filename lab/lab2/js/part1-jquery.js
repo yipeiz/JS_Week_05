@@ -139,7 +139,7 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   Task 6: Plot input data to the map on button click
     Modify this form to include at least a lat (number), long (number), description (text), and
     color (color) inputs. With these inputs you should be able to plot a circle marker
-    (http://leafletjs.com/reference.html#circlemarker) to the lat/long on the form, with the color
+      (http://leafletjs.com/reference.html#circlemarker) to the lat/long on the form, with the color
     provided, and a bound popup which gives you the description.
 
   // STRETCH GOALS
@@ -169,5 +169,73 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 // the function passed to `ready` until the HTML document is fully loaded and all scripts have
 // been interpreted. It is, therefore, an example of asynchronous behavior.
 $(document).ready(function() {
-  // Do your stuff here
+  $('#text-label1').text('Name');
+  $('#text-label2').text('Address');
+  $('#text-label3').text('Hobby');
+  $('#number-label').text('Age');
+  $('#checkbox-label1').text('Did he ever kill?');
+  $('#checkbox-label2').text('Will be a dragon knight?');
+  $('#color-label').text('What color suits him?');
+
+  $('#text-input1').val('Jon Snow');
+  $('#text-input2').val('Black Castle');
+  $('#text-input3').val('Miserable Face');
+  $('#numeric-input').val(20);
+  $('#cbox-input1').prop('checked',true);
+  $('#cbox-input2').prop('checked', true);
+  $('#color-input').val('#ecc6d9');
+  $("#text-input1").attr("value", "Not Jon Snow");
+
+  $('input').prop('disabled', false);
+
+  $('button').click(function(){
+    var TheKingInTheN = {
+        name:  $('#text-input1').val(),
+        address:  $('#text-input2').val(),
+        hobby: $('#text-input3').val(),
+        age: $('#numeric-input').val(),
+        killever: $('#cbox-input1').val(),
+        dragonknight: $('#cbox-input2').val(),
+        color: $('#color-input').val()
+    };
+    switch(TheKingInTheN.name){
+      case "":
+      TheKingInTheN.name = "Jon Snow";
+      break;
+    }
+    switch(TheKingInTheN.age){
+      case "":
+      TheKingInTheN.age = 20;
+      break;
+    }
+    switch(TheKingInTheN.color){
+      case "":
+      TheKingInTheN.color = '#ecc6d9';
+      break;
+    }
+//
+//     Task 8: Try Leaflet's divIcon
+//       Instead of using a default leaflet marker or a circleMarker, try using a L.divIcon. A div icon
+//       is just an HTML <div> element on which CSS can be applied (HINT: background-color or
+//       background-image are necessary if you want to see the icon). When you've successfully implemented
+//       a divIcon, you should be able to grab it by reference to its class: 'leaflet-marker-icon'. So,
+//       in jQuery, $('.leaflet-marker-icon').
+//
+//     Task 9: Make a parametric function (one that accepts parameters/arguments) to fill the form out.
+//       At this point, we have an object which corresponds to a (at least partially) filled out form.
+//       That being so, we should be able to write a function that accepts, as an argument,
+//       one of those objects and properly fills out the form to match the values of that object. Try to
+//       update the code below so that an object entered into your form-filling function is stored on the
+//       HTML and fully reconstituted by the code you've written to read from the form.
+//
+//       Use `_.isEqual` to make sure the object you feed in is the same as the one you read back out.
+//
+    console.log(TheKingInTheN);
+    var theI = L.divIcon({className: 'myI',
+    html:'<img src="http://img.huffingtonpost.com/asset/scalefit_630_noupscale/56e024e81500002a000b1742.jpeg?cache=jzkjufoi3w" style="width:800%; height:500%">',
+    iconAnchor:[50, 20]
+    });
+
+    L.marker([39.9522, -75.1639],{icon: theI}).addTo(map).bindPopup(TheKingInTheN.name + " is the King in the North!").openPopup();
+  });
 });
